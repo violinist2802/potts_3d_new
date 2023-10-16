@@ -1,0 +1,51 @@
+{
+    "os": "Linux-5.15.0-72-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2023-06-27T16:25:48.156329",
+    "startedAt": "2023-06-27T16:25:47.088331",
+    "docker": null,
+    "cuda": null,
+    "args": null,
+    "state": "running",
+    "program": "potts_3d_new/Untitled.ipynb",
+    "root": "/home/vadim",
+    "host": "Vadim-Laptop",
+    "username": "vadim",
+    "executable": "/usr/bin/python3",
+    "cpu_count": 2,
+    "cpu_count_logical": 4,
+    "cpu_freq": {
+        "current": 2012.80375,
+        "min": 400.0,
+        "max": 2300.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1151.215,
+            "min": 400.0,
+            "max": 2300.0
+        },
+        {
+            "current": 2300.0,
+            "min": 400.0,
+            "max": 2300.0
+        },
+        {
+            "current": 2300.0,
+            "min": 400.0,
+            "max": 2300.0
+        },
+        {
+            "current": 1196.308,
+            "min": 400.0,
+            "max": 2300.0
+        }
+    ],
+    "disk": {
+        "total": 48.99898147583008,
+        "used": 37.63057327270508
+    },
+    "memory": {
+        "total": 7.644622802734375
+    }
+}

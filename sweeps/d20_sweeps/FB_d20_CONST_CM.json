@@ -1,0 +1,16 @@
+{"method": "bayes", "name": "FB d20 const CM", "parameters": {"CELL_DAY_TYPE": {"values": ["d20"]}, 
+
+"TARGETVOLUME_FB":           {"distribution": "uniform", "min": 100,  "max": 400},
+"GN_FB":           {"distribution": "uniform", "min": 1,  "max": 1000}, 
+"INELASTICITY_FB": {"distribution": "uniform", "min": 1,  "max": 400}, 
+"DETACH_FB":       {"distribution": "uniform", "min": 10,  "max": 300}, 
+"LMAX_FB":         {"distribution": "uniform", "min": 10,  "max": 150},
+"MAX_FOCALS_FB":   {"distribution": "int_uniform", "min": 4,"max": 40},
+"GN_CM":{"value":79.91157556487452},
+"LMAX_CM":{"value":20.734813514803463},
+"DETACH_CM":{"value":168.83014728577885},
+"MAX_FOCALS_CM":{"value":4},
+"INELASTICITY_CM":{"value":54.234357408112},
+"TARGETVOLUME_CM":{"value":271.75073573152406}},
+
+"metric": {"name": "mean_metric", "goal": "minimize"}}
