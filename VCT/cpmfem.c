@@ -161,6 +161,7 @@ int cpmfem(
 		findCM(pv,CMs,NRc, NVX, NVY, NVZ);
 		acceptance = CPM_moves(pv,CCAlabels,pb,pf,CMs, 
 attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, INELASTICITY_CM, INELASTICITY_FB, LMAX_CM, LMAX_FB, GN_CM, GN_FB, UNLEASH_CM, UNLEASH_FB, DETACH_CM, DETACH_FB, VOXSIZE, NVX, NVY, NVZ, JCMCM, JCMMD, JFBFB, JFBMD, JFBCM, CONT, CONT_INHIB);
+		if (acceptance<0.0001 && incr>100) break;
 
 		if (incr % STEP_PRINT == 0 && !silence){
 			printf("\nAcceptance rate %.4f",acceptance);
@@ -187,6 +188,7 @@ attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, I
 		}
 
 		acceptance = CH_moves(pv, CMs, 0.5 + 0.5*incr/NRINC, VOXSIZE, NVX, NVY, NVZ);
+		if (acceptance<0.0001 && incr>100) break;
 
 		if (incr % 100 == 0 && !silence){
 			printf("\nAcceptance rate %.4f",acceptance);
