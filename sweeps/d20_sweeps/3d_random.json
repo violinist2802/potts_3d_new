@@ -1,0 +1,14 @@
+{"method": "random", "name": "3d_random", "parameters": {
+"TARGETVOLUME_CM":           {"distribution": "uniform", "min": 1000,  "max": 5000},
+"GN_CM":           {"distribution": "uniform", "min": 1,  "max": 1000}, 
+"INELASTICITY_CM": {"distribution": "uniform", "min": 1,  "max": 1000}, 
+"DETACH_CM":       {"distribution": "uniform", "min": 10,  "max": 1000}, 
+"LMAX_CM":         {"distribution": "uniform", "min": 10,  "max": 150},
+"MAX_FOCALS_CM":   {"distribution": "int_uniform", "min": 4,"max": 40},
+"UNLEASH_CM":      {"distribution": "uniform", "min": 1,  "max": 1000},
+"JCMMD":      {"distribution": "uniform", "min": 0.1,  "max": 5.0},
+"JCMCM":      {"distribution": "uniform", "min": 0.1,  "max": 5.0}
+
+},
+
+"metric": {"name": "mean", "goal": "minimize"}}
