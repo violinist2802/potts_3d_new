@@ -20,8 +20,9 @@ def metrics_3d(c_tags, types, fibers, contacts, area, elongation):
     CM, FB = make_df(c_tags, types)
     metrics = {}
     metrics['area_entropy'] = (CM['area'].mean()/area -1)**2
+    metrics['area_abs'] = CM['area'].mean()
     metrics['elongation_entropy'] = (CM['elongation'].mean()/elongation -1)**2
-    metrics['mean'] = (metrics['area_entropy']+metrics['elongation_entropy'])/2
+    metrics['mean'] = (metrics['area_entropy'])
     img = make_image(types, c_tags, fibers, contacts, 0)
     metrics['image'] = wandb.Image(img)
     return metrics
