@@ -1,5 +1,5 @@
 {"method": "random", "name": "3d_random", "parameters": {
-"TARGETVOLUME_CM":           {"distribution": "uniform", "min": 1000,  "max": 5000},
+"TARGETVOLUME_CM":           {"distribution": "uniform", "min": 1000,  "max": 10000},
 "GN_CM":           {"distribution": "uniform", "min": 1,  "max": 1000}, 
 "INELASTICITY_CM": {"distribution": "uniform", "min": 1,  "max": 1000}, 
 "DETACH_CM":       {"distribution": "uniform", "min": 10,  "max": 1000}, 
