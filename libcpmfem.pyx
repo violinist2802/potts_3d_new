@@ -36,7 +36,8 @@ cdef extern from "libcpmfem.h":
 	int* cont_m,
 	int* fibr,
 	int* ctag_m,
-	int cyto)
+	int cyto,
+	double * dH_array)
 	
 def py_cpmfem(int NCX, int NCY, int NCZ, PART, double VOXSIZE, double sizeX, double sizeY, double sizeZ, scenario, int cyto, NRINC, **kwargs):
 	'''
@@ -65,16 +66,18 @@ def py_cpmfem(int NCX, int NCY, int NCZ, PART, double VOXSIZE, double sizeX, dou
 	cdef int* cont_m = <int*>malloc(NVX*NVY*NVZ*sizeof(int))
 	cdef int* fibr = <int*>malloc(NVX*NVY*NVZ*sizeof(int))
 	cdef int* ctag_m = <int*>malloc(NVX*NVY*NVZ*sizeof(int))
+	cdef double* dH_array = <double*>malloc(6*sizeof(int))
 
 	cfg = parse_config('./utils/config.yaml', scenario)
 	for arg, value in kwargs.items():
 		cfg[arg]=value
 	
-	cpmfem(NCX, NCY, NCZ, PART, VOXSIZE, NVX, NVY, NVZ, cfg['GN_CM'], cfg['GN_FB'], cfg['TARGETVOLUME_CM'], cfg['TARGETVOLUME_FB'], cfg['DETACH_CM'], cfg['DETACH_FB'], cfg['INELASTICITY_FB'], cfg['INELASTICITY_CM'],  cfg['JCMMD'], cfg['JFBMD'], cfg['JCMCM'], cfg['JFBFB'], cfg['JFBCM'], cfg['UNLEASH_CM'], cfg['UNLEASH_FB'], cfg['LMAX_CM'], cfg['LMAX_FB'], cfg['MAX_FOCALS_CM'], cfg['MAX_FOCALS_FB'], cfg['shifts'], cfg['distanceF'], NRINC, typ, cont_m, fibr, ctag_m, cyto)
+	cpmfem(NCX, NCY, NCZ, PART, VOXSIZE, NVX, NVY, NVZ, cfg['GN_CM'], cfg['GN_FB'], cfg['TARGETVOLUME_CM'], cfg['TARGETVOLUME_FB'], cfg['DETACH_CM'], cfg['DETACH_FB'], cfg['INELASTICITY_FB'], cfg['INELASTICITY_CM'],  cfg['JCMMD'], cfg['JFBMD'], cfg['JCMCM'], cfg['JFBFB'], cfg['JFBCM'], cfg['UNLEASH_CM'], cfg['UNLEASH_FB'], cfg['LMAX_CM'], cfg['LMAX_FB'], cfg['MAX_FOCALS_CM'], cfg['MAX_FOCALS_FB'], cfg['shifts'], cfg['distanceF'], NRINC, typ, cont_m, fibr, ctag_m, cyto, dH_array)
 	types=[]
 	ctags=[]
 	fibers=[]
 	contacts=[]
+	dH_array_p=[]
 	for i in range(NVX):
 		ctags.append([])
 		fibers.append([])
@@ -95,6 +98,8 @@ def py_cpmfem(int NCX, int NCY, int NCZ, PART, double VOXSIZE, double sizeX, dou
 	for i in range(NCX*NCY*NCZ):
 		types.append(int(typ[i]))
 	
+	for i in range(6):
+		dH_array_p.append(dH_array[i])
 	types=np.array(types)
 	ctags=np.array(ctags)
 	fibers=np.array(fibers)
@@ -103,5 +108,6 @@ def py_cpmfem(int NCX, int NCY, int NCZ, PART, double VOXSIZE, double sizeX, dou
 	free(cont_m)
 	free(fibr)
 	free(ctag_m)
-	return types, ctags, fibers, contacts
+	free(dH_array)
+	return types, ctags, fibers, contacts, dH_array_p
 
