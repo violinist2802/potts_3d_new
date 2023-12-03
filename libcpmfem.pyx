@@ -66,7 +66,7 @@ def py_cpmfem(int NCX, int NCY, int NCZ, PART, double VOXSIZE, double sizeX, dou
 	cdef int* cont_m = <int*>malloc(NVX*NVY*NVZ*sizeof(int))
 	cdef int* fibr = <int*>malloc(NVX*NVY*NVZ*sizeof(int))
 	cdef int* ctag_m = <int*>malloc(NVX*NVY*NVZ*sizeof(int))
-	cdef double* dH_array = <double*>malloc(6*sizeof(int))
+	cdef double* dH_array = <double*>malloc(6*sizeof(double))
 
 	cfg = parse_config('./utils/config.yaml', scenario)
 	for arg, value in kwargs.items():
