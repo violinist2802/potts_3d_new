@@ -40,7 +40,8 @@ int cpmfem(
 	int* cont_m,
 	int* fibr,
 	int* ctag_m,
-	int cyto
+	int cyto,
+	double * dH_array
 	
 )
 {
@@ -143,6 +144,12 @@ int cpmfem(
 	time = tv.tv_sec;
 
 	write_types(types,NRc);		//save types into file
+	double * dH_ins = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins[c]=0;}
+	double * dH_ins_cont = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_cont[c]=0;}
+	double * dH_ins_vol = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_vol[c]=0;}
+	double * dH_ins_pr = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_pr[c]=0;}
+	double * dH_ins_sync = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_sync[c]=0;}
+	double * dH_ins_nucl = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_nucl[c]=0;}
 	
 	// START SIMULATION ///
 	for(incr=startincr; incr<NRINC; incr++)
@@ -160,8 +167,28 @@ int cpmfem(
 
 		findCM(pv,CMs,NRc, NVX, NVY, NVZ);
 		acceptance = CPM_moves(pv,CCAlabels,pb,pf,CMs, 
-attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, INELASTICITY_CM, INELASTICITY_FB, LMAX_CM, LMAX_FB, GN_CM, GN_FB, UNLEASH_CM, UNLEASH_FB, DETACH_CM, DETACH_FB, VOXSIZE, NVX, NVY, NVZ, JCMCM, JCMMD, JFBFB, JFBMD, JFBCM, CONT, CONT_INHIB);
-		if (acceptance<0.0001 && incr>100) break;
+attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, INELASTICITY_CM, INELASTICITY_FB, LMAX_CM, LMAX_FB, GN_CM, GN_FB, UNLEASH_CM, UNLEASH_FB, DETACH_CM, DETACH_FB, VOXSIZE, NVX, NVY, NVZ, JCMCM, JCMMD, JFBFB, JFBMD, JFBCM, CONT, CONT_INHIB, incr, dH_ins, dH_ins_cont, dH_ins_vol, dH_ins_pr, dH_ins_sync, dH_ins_nucl);
+		if (acceptance<0.0001 && incr>100) {
+			int i;
+			for(i=0; i<incr; i++){
+				dH_array[0] += dH_ins[i];
+				dH_array[1] += dH_ins_cont[i];
+				dH_array[2] += dH_ins_nucl[i];
+				dH_array[3] += dH_ins_pr[i];
+				dH_array[4] += dH_ins_sync[i];
+				dH_array[5] += dH_ins_vol[i];
+
+
+			}
+			dH_array[0] /= incr;
+			dH_array[1] /= incr;
+			dH_array[2] /= incr;
+			dH_array[3] /= incr;
+			dH_array[4] /= incr;
+			dH_array[5] /= incr;
+
+			break;
+		}
 
 		if (incr % STEP_PRINT == 0 && !silence){
 			printf("\nAcceptance rate %.4f",acceptance);
@@ -227,6 +254,12 @@ attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, I
 	free(pv); 
 	free(pf);
 	free(CCAlabels);
+	free(dH_ins);
+	free(dH_ins_cont);
+	free(dH_ins_nucl);
+	free(dH_ins_pr);
+	free(dH_ins_sync);
+	free(dH_ins_vol);
 	
 	return 0;
 }

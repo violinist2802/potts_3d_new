@@ -16,7 +16,7 @@ FIBERS* 	set_fibers(double distanceF, double VOXSIZE, int NVX, int NVY, int NVZ)
 
 // cellmoves.c
 double 		CPM_moves(VOX* pv, short * CCAlabels,BOX* pb, FIBERS* pf, 
-CM* CMs, int* attached, int* csize, double MAX_FOCALS_CM, double MAX_FOCALS_FB, double TARGETVOLUME_CM, double TARGETVOLUME_FB, double INELASTICITY_CM, double INELASTICITY_FB, double LMAX_CM, double LMAX_FB, double GN_CM, double GN_FB, double UNLEASH_CM, double UNLEASH_FB, double DETACH_CM, double DETACH_FB, double VOXSIZE, int NVX, int NVY, int NVZ, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM, char CONT, char CONT_INHIB);
+CM* CMs, int* attached, int* csize, double MAX_FOCALS_CM, double MAX_FOCALS_FB, double TARGETVOLUME_CM, double TARGETVOLUME_FB, double INELASTICITY_CM, double INELASTICITY_FB, double LMAX_CM, double LMAX_FB, double GN_CM, double GN_FB, double UNLEASH_CM, double UNLEASH_FB, double DETACH_CM, double DETACH_FB, double VOXSIZE, int NVX, int NVY, int NVZ, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM, char CONT, char CONT_INHIB, int incr, double * dH_ins, double * dH_ins_cont, double * dH_ins_vol, double * dH_ins_pr, double * dH_ins_sync, double * dH_ins_nucl);
 double 		CH_moves(VOX* pv, CM* CMs, double k, double VOXSIZE, int NVX, int NVY, int NVZ);
 BOOL 		splitcheckCCR(VOX* pv, short * CCAlabels, BOX* pb,  
 int* csize, int xt, int ttag, int NVX, int NVY, int NVZ);
@@ -33,7 +33,7 @@ double 		calcdHborder(VOX* pv, int xt, int ttag, int NVX, int NVY);
 double 		calcdHdist(VOX* pv, CM* CMs, int xt, int xs, int ttag, int NVX, int NVY);
 
 //calculate H
-double 		calcdH(VOX* pv, FIBERS* pf, CM* CMs, int* csize, int xt, int xs, int pick, int ttag, int stag, double TARGETVOLUME_CM, double TARGETVOLUME_FB, double INELASTICITY_CM, double INELASTICITY_FB, double LMAX_CM, double LMAX_FB, double GN_CM, double GN_FB, double UNLEASH_CM, double UNLEASH_FB, double DETACH_CM, double DETACH_FB, double VOXSIZE, int NVX, int NVY, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM);
+double 		calcdH(VOX* pv, FIBERS* pf, CM* CMs, int* csize, int xt, int xs, int pick, int ttag, int stag, double TARGETVOLUME_CM, double TARGETVOLUME_FB, double INELASTICITY_CM, double INELASTICITY_FB, double LMAX_CM, double LMAX_FB, double GN_CM, double GN_FB, double UNLEASH_CM, double UNLEASH_FB, double DETACH_CM, double DETACH_FB, double VOXSIZE, int NVX, int NVY, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM, int incr, double * dH_ins, double * dH_ins_cont, double * dH_ins_vol, double * dH_ins_pr, double * dH_ins_sync, double * dH_ins_nucl);
 double 		calcdHcontact(VOX* pv, int xt, int xs, int ttag, int stag, int NVX, int NVY, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM);
 double 		contactenergy(int tag1, int tag2, int type1, int type2, double JCMCM, double JCMMD, double JFBFB, double JFBMD, double JFBCM);
 double 		scaffoldenergy(int tag, int Q);

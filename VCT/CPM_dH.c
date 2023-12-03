@@ -68,7 +68,7 @@ double calcdHdist(VOX* pv, CM* CMs, int xt, int xs, int ttag, int NVX, int NVY)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-double calcdH(VOX* pv, FIBERS* pf, CM* CMs, int* csize, int xt, int xs, int pick, int ttag, int stag, double TARGETVOLUME_CM, double TARGETVOLUME_FB, double INELASTICITY_CM, double INELASTICITY_FB, double LMAX_CM, double LMAX_FB, double GN_CM, double GN_FB, double UNLEASH_CM, double UNLEASH_FB, double DETACH_CM, double DETACH_FB, double VOXSIZE, int NVX, int NVY, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM)
+double calcdH(VOX* pv, FIBERS* pf, CM* CMs, int* csize, int xt, int xs, int pick, int ttag, int stag, double TARGETVOLUME_CM, double TARGETVOLUME_FB, double INELASTICITY_CM, double INELASTICITY_FB, double LMAX_CM, double LMAX_FB, double GN_CM, double GN_FB, double UNLEASH_CM, double UNLEASH_FB, double DETACH_CM, double DETACH_FB, double VOXSIZE, int NVX, int NVY, double JCMCM, double JCMMD, double JFBFB, double JFBMD,  double JFBCM, int incr, double * dH_ins, double * dH_ins_cont, double * dH_ins_vol, double * dH_ins_pr, double * dH_ins_sync, double * dH_ins_nucl)
 {
 	double dH, dHcontact, dHvol, dHfocals, dHsyncytium, dHnuclei;
 	int ctag;
@@ -90,6 +90,15 @@ double calcdH(VOX* pv, FIBERS* pf, CM* CMs, int* csize, int xt, int xs, int pick
 	dHnuclei = calcdHnuclei(pv, CMs, xt, ttag, stag, DETACH_CM, DETACH_FB, VOXSIZE, NVX, NVY);
 
 	dH = dHcontact + dHvol + dHfocals + dHsyncytium + dHnuclei;
+	dH_ins[incr] += dH;
+	dH_ins_cont[incr] += dHcontact;
+	dH_ins_pr[incr] += dHfocals;
+	dH_ins_sync[incr] += dHsyncytium;
+	dH_ins_vol[incr] += dHvol;
+	dH_ins_nucl[incr] += dHnuclei; 
+	
+
+
 	/*printf("\ndH %.4f",dH);
 	printf("\ndHcontact %.4f",dHcontact);
 	printf("\ndHvol %.4f",dHvol);

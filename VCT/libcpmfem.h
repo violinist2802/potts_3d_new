@@ -33,7 +33,8 @@ int cpmfem(
 	int* cont_m,
 	int* fibr,
 	int* ctag_m,
-	int cyto
+	int cyto,
+	double * dH_array
 );
 
 #endif
