@@ -24,6 +24,11 @@ def metrics_3d(c_tags, types, fibers, contacts, area, elongation):
     metrics['elongation_entropy'] = (CM['elongation'].mean()/elongation -1)**2
     metrics['mean'] = (metrics['area_entropy'])
     img = make_image(types, c_tags, fibers, contacts, 0)
+    len_gomo_CM, len_gomo_FB, len_getero = boulder(img)
+    metrics['CM_b'] = len_gomo_CM
+    metrics['FB_b'] = len_gomo_FB
+    metrics['g_b'] = len_getero
+    
     metrics['image'] = wandb.Image(img)
     return metrics
     
@@ -163,7 +168,7 @@ def boulder(img):
     part_CM=len_gomo_CM/(len_gomo_CM+len_gomo_FB+len_getero)
     part_FB=len_gomo_FB/(len_gomo_CM+len_gomo_FB+len_getero)
     part_getero=len_getero/(len_gomo_CM+len_gomo_FB+len_getero)
-    return part_CM, part_FB, part_getero
+    return len_gomo_CM, len_gomo_FB, len_getero
   
         
 def get_exp_distributions(all_data, cell_day_type):
