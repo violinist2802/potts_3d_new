@@ -150,6 +150,7 @@ int cpmfem(
 	double * dH_ins_pr = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_pr[c]=0;}
 	double * dH_ins_sync = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_sync[c]=0;}
 	double * dH_ins_nucl = malloc(NRINC * sizeof(double)); for(c=0;c<NRINC;c++) {dH_ins_nucl[c]=0;}
+	int flag = 1;
 	
 	// START SIMULATION ///
 	for(incr=startincr; incr<NRINC; incr++)
@@ -169,6 +170,7 @@ int cpmfem(
 		acceptance = CPM_moves(pv,CCAlabels,pb,pf,CMs, 
 attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, INELASTICITY_CM, INELASTICITY_FB, LMAX_CM, LMAX_FB, GN_CM, GN_FB, UNLEASH_CM, UNLEASH_FB, DETACH_CM, DETACH_FB, VOXSIZE, NVX, NVY, NVZ, JCMCM, JCMMD, JFBFB, JFBMD, JFBCM, CONT, CONT_INHIB, incr, dH_ins, dH_ins_cont, dH_ins_vol, dH_ins_pr, dH_ins_sync, dH_ins_nucl);
 		if (acceptance<0.0001 && incr>100) {
+			flag = 0;
 			int i;
 			for(i=0; i<incr; i++){
 				dH_array[0] += dH_ins[i];
@@ -194,7 +196,23 @@ attached,csize, MAX_FOCALS_CM,MAX_FOCALS_FB, TARGETVOLUME_CM, TARGETVOLUME_FB, I
 			printf("\nAcceptance rate %.4f",acceptance);
 		}
 	}
-
+	int step;
+	if (flag==1){
+		for(step=0; step<(NRINC-1); step++){
+				dH_array[0] += dH_ins[step];
+				dH_array[1] += dH_ins_cont[step];
+				dH_array[2] += dH_ins_nucl[step];
+				dH_array[3] += dH_ins_pr[step];
+				dH_array[4] += dH_ins_sync[step];
+				dH_array[5] += dH_ins_vol[step];
+				}
+			dH_array[0] /= NRINC;
+			dH_array[1] /= NRINC;
+			dH_array[2] /= NRINC;
+			dH_array[3] /= NRINC;
+			dH_array[4] /= NRINC;
+			dH_array[5] /= NRINC;
+	}
 	/// END ///
 	if(!silence)
 	printf("\nSIMULATION FINISHED!\n");
